@@ -1,0 +1,39 @@
+
+scontrol show job 701774
+JobId=701774 JobName=md_ase
+   UserId=abbas71(3137043) GroupId=abbas71(3137043) MCS_label=N/A
+   Priority=794836 Nice=0 Account=rrg-ovoznyy QOS=normal
+   JobState=COMPLETING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:10:32 TimeLimit=00:30:00 TimeMin=N/A
+   SubmitTime=2025-12-26T15:51:28 EligibleTime=2025-12-26T15:51:28
+   AccrueTime=2025-12-26T15:51:28
+   StartTime=2025-12-26T15:51:28 EndTime=2025-12-26T16:02:00 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2025-12-26T15:51:28 Scheduler=Main
+   Partition=compute AllocNode:Sid=tri-login05:431513
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=tri0051
+   BatchHost=tri0051
+   NumNodes=1 NumCPUs=192 NumTasks=192 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=192,mem=767000M,node=1,billing=192
+   AllocTRES=cpu=192,mem=767000M,node=1,billing=192
+   Socks/Node=* NtasksPerN:B:S:C=192:0:*:* CoreSpec=*
+   MinCPUsNode=192 MinMemoryNode=767000M MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) Network=(null)
+   Command=/scratch/abbas71/work/exp_project/sonia_project/ase_md/relax/complex/mlp_submit.sh
+   WorkDir=/scratch/abbas71/work/exp_project/sonia_project/ase_md/relax/complex
+   Comment=/opt/slurm/bin/sbatch --export=NONE --get-user-env=L mlp_submit.sh 
+   StdErr=/scratch/abbas71/work/exp_project/sonia_project/ase_md/relax/complex/job_error.log
+   StdIn=/dev/null
+   StdOut=/scratch/abbas71/work/exp_project/sonia_project/ase_md/relax/complex/job_output.log
+   TresPerTask=cpu=1
+   
+
+sacct -j 701774
+JobID           JobName    Account    Elapsed  MaxVMSize     MaxRSS  SystemCPU    UserCPU ExitCode 
+------------ ---------- ---------- ---------- ---------- ---------- ---------- ---------- -------- 
+701774           md_ase rrg-ovozn+   00:10:32                        31:57.030   16:20:13      0:0 
+701774.batch      batch rrg-ovozn+   00:10:32          0    296424K  31:57.029   16:20:13      0:0 
+701774.exte+     extern rrg-ovozn+   00:10:32          0          0   00:00:00   00:00:00      0:0 
+
