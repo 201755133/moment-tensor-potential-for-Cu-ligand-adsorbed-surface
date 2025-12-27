@@ -1,0 +1,41 @@
+#=========== VARIABLES ==========
+variable        T equal 300.0      # Temperature
+variable        tdamp equal 0.1    # Damping parameter
+#=============== INITIALIZATION ========================
+units           metal
+boundary        p p f               # Periodic in x and y, fixed in z
+atom_style      atomic
+processors      * * 2
+#============== READ CONFIGURATION =====================
+read_data       lammps.data
+group fixc id 1 2 3 5 6 7 9 10 11 13 14 15 17 18 19 21 22 23 25 26 27 29 30 31 33 34 35 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 73 74 75 77 78 79 81 82 83 85 86 87 89 90 91 93 94 95 97 98 99 101 102 103 105 106 107 109 110 111 113 114 115 117 118 119 121 122 123 125 126 127 129 130 131 132 133 134 135 137 138 139 141 142 143 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 351 352 353 354 355 357 358 359 360 361 362 363 364 365 366 368 370 371 372 373 445 752
+mass   1 63.546      # atomic mass for Cu
+mass   2 12.0107     # atomic mass for C
+mass   3 35.453      # atomic mass for Cl
+mass   4 15.9994     # atomic for O
+mass   5 14.0067     # atomic mass for N
+mass   6 1.00794     # atomic for H
+mass   7 32.065      # atomic mass for S
+group moveatoms subtract all fixc
+#============== POTENTIAL ==============================
+pair_style      mlip load_from=pot.mtp
+pair_coeff      * *
+neighbor        3.0 bin               # Increased skin distance for stability
+neigh_modify    every 1 delay 5 check yes
+#================= VELOCITIES & TIMESTEP ===============
+reset_timestep  0
+#================= FIXES ==============================
+fix 1  moveatoms nvt temp ${T} ${T} ${tdamp}
+fix freeze fixc setforce 0.0 0.0 0.0
+velocity fixc set 0.0 0.0 0.0
+#================= OUTPUT SETTINGS =====================
+thermo          1000
+thermo_style    custom step temp lx ly lz press pe etotal density vol enthalpy
+timestep        0.00001
+#min_style        cg
+minimize 1.0e-2 1.0e-2 100 1000
+dump            1 all custom 2000 ./config/${T}_md.trj id type x y z
+dump_modify     1 append yes sort id
+#================= RUN ====================================
+run             10000000
+
